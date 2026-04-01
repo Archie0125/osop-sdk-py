@@ -1,0 +1,91 @@
+osop_version: "1.0"
+id: "contributing-osop-sdk-py"
+name: "Contributing to OSOP Python SDK"
+description: "How to contribute to the Python SDK for parsing, validating, and executing OSOP workflows."
+version: "1.0.0"
+status: "active"
+usage: "reference"
+tags: [meta, dogfooding, contributing, sdk, python]
+
+nodes:
+  - id: "setup"
+    type: "cli"
+    subtype: "script"
+    name: "Setup"
+    description: "Clone repo, create venv, pip install -e '.[dev]'. Requires Python 3.10+."
+    timeout_sec: 60
+
+  - id: "branch"
+    type: "git"
+    subtype: "branch"
+    name: "Create Branch"
+    description: "Create a feature branch from main."
+
+  - id: "implement"
+    type: "human"
+    name: "Implement"
+    description: "Write your feature or fix. Follow existing patterns. Type hints required."
+
+  - id: "test"
+    type: "cicd"
+    subtype: "test"
+    name: "Run Tests"
+    description: "Run pytest. All tests must pass."
+    timeout_sec: 120
+
+  - id: "lint"
+    type: "cicd"
+    subtype: "test"
+    name: "Lint & Type Check"
+    description: "Run ruff check and mypy for code quality."
+    timeout_sec: 60
+
+  - id: "submit-pr"
+    type: "git"
+    subtype: "pr"
+    name: "Submit PR"
+    description: "Create PR with description and test plan."
+
+  - id: "review"
+    type: "human"
+    subtype: "review"
+    name: "Review"
+    description: "Maintainer reviews for API consistency, test coverage, and Pythonic patterns."
+    approval_gate:
+      required: true
+      min_approvals: 1
+
+  - id: "publish"
+    type: "cli"
+    subtype: "script"
+    name: "Publish to PyPI"
+    description: "Maintainer publishes new version to PyPI after merge."
+    security:
+      risk_level: "high"
+
+edges:
+  - from: "setup"
+    to: "branch"
+    mode: "sequential"
+  - from: "branch"
+    to: "implement"
+    mode: "sequential"
+  - from: "implement"
+    to: "test"
+    mode: "sequential"
+  - from: "implement"
+    to: "lint"
+    mode: "parallel"
+  - from: "test"
+    to: "submit-pr"
+    mode: "sequential"
+  - from: "test"
+    to: "implement"
+    mode: "fallback"
+    label: "Tests failed"
+  - from: "submit-pr"
+    to: "review"
+    mode: "sequential"
+  - from: "review"
+    to: "publish"
+    mode: "sequential"
