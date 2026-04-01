@@ -3,6 +3,7 @@
 __version__ = "0.1.0"
 
 from osop_sdk.client import AsyncOsopClient, OsopClient
+from osop_sdk.report import generate_html_report, generate_text_report
 from osop_sdk.models import (
     ExecutionNodeResult,
     ExecutionResult,
@@ -30,4 +31,6 @@ __all__ = [
     "RenderResult",
     "TestResult",
     "TestCaseResult",
+    "generate_html_report",
+    "generate_text_report",
 ]
