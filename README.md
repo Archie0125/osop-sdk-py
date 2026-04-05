@@ -4,7 +4,9 @@
 [![PyPI](https://img.shields.io/pypi/v/osop-sdk)](https://pypi.org/project/osop-sdk/)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 
-Official Python SDK for OSOP (Open Standard Operating Procedures). Provides `OsopClient` for programmatic access to validate, run, render, and test OSOP workflows via the OSOP API.
+**Serves both SOP Doc and The Loop.** Build workflow tools in Python.
+
+Parse .osop files, validate, render, execute. Build custom SOP Doc viewers or integrate The Loop into Python applications. Sync and async clients.
 
 Website: [osop.ai](https://osop.ai) | GitHub: [github.com/osop/osop-sdk-py](https://github.com/osop/osop-sdk-py)
 
